@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Contactos from './src/Contactos';
 
 export default function App() {
   return (
