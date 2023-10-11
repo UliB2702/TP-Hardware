@@ -2,10 +2,10 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
 import { TextInput } from 'react-native-web';
-import Contacto from './Contactos';
+import Contacto from './src/Contactos';
 
 
-import { ContextProvider } from './contextState';
+import { ContextProvider } from './src/contextState';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
