@@ -3,15 +3,13 @@ import React, { useContext } from "react";
 export const initialState = {
   loading: false,
   userToken: "",
-  allRecepies: [],
-  detallado: undefined,
+  ubicacion: undefined,
 };
 
 export const ActionTypes = {
   setLoading: "SET_LOADING",
   setUserToken: "SET_USER_TOKEN",
-  setRecepies: "SET_RECEPIES",
-  setDetallado: "SET_DETALLADO",
+  setUbicacion: "SET_UBICACION",
 };
 
 export const reducer = (state = initialState, action) => {
@@ -20,16 +18,12 @@ export const reducer = (state = initialState, action) => {
     case ActionTypes.setLoading: {
       return { ...state, loading: action.newValue };
     }
-    case ActionTypes.setRecepies: {
-      return { ...state, allRecepies: action.newValue };
+    case ActionTypes.setUbicacion: {
+      return { ...state, ubicacion: action.newValue };
     }
     case ActionTypes.setUserToken: {
       console.log(action)
       return { ...state, userToken: action.newValue };
-    }
-    case ActionTypes.setDetallado: {
-      console.log(action)
-      return { ...state, detallado: action.newValue };
     }
     default: {
       return state;
