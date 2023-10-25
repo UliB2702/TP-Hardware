@@ -7,22 +7,22 @@ import * as Location from 'expo-location';
 export default function HoraClima() {
 
   const {contextState, setContextState} = useContextState()
+  const [temperatura, setTemperatura] = useState([]);
   const [hora, setHora] = useState([]);
-  const [location, setLocation] = useState([]);
-
   const options = {method: 'GET'};
 
 
-  useEffect(() => {
-    fetch('https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&APPID=d8cbe07a8e59f915e3d4f78ccdd4d385&units=metric', options)
+  function buscarHora(location){
+    fetch(`https://api.weatherapi.com/v1/current.json?key=b816434d79ed4c8b942113947232510&q=${location.coords.latitude},${location.coords.longitude}`, options)
     .then(response => response.json())
     .then(response => {
-      setHora(response)
+      setTemperatura(response)
       console.log(response)
+      setHora(temperatura?.location?.localtime)
     })
     .catch(err => console.error(err));
   
-    }, []);
+    }
 
   useEffect(() => {
     (async () => {
@@ -35,8 +35,9 @@ export default function HoraClima() {
 
       let location = await Location.getCurrentPositionAsync({});
       console.log(location)
-      setLocation(location);
+      buscarHora(location)
     })();
+    
   }, []);
 
 
@@ -49,9 +50,13 @@ export default function HoraClima() {
       <StatusBar
         backgroundColor="#61dafb"
       />
-      <Text
-              style={styles.nombreApellido}
-            >{`${location.coords}`}</Text>
+      <Text style={styles.nombreApellido}>
+            {`${temperatura?.current?.temp_c} C °`}
+     </Text>
+     <Text style={styles.nombreApellido}>
+            {`${temperatura?.location?.localtime.split(' ')[1]}`}
+     </Text>
+      {console.log(temperatura?.current?.temp_c, temperatura?.location?.localtime.split(' ')[1])}
     </View>
   );
 }
@@ -60,6 +65,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1e272e", // Color de fondo
+    alignItems: "center",
   },
   nombreApellido: {
     fontSize: 18,
