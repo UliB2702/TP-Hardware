@@ -98,10 +98,11 @@ const styles = StyleSheet.create({
   },
   contactoContainer: {
     padding: 16,
-    backgroundColor: "#34495e", // Color de fondo del contacto
+    backgroundColor: "#577D7E", // Color de fondo del contacto
     margin: 8,
     borderRadius: 8,
     elevation: 2,
+    minWidth: '350px'
   },
   nombreApellido: {
     fontSize: 18,
