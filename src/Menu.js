@@ -26,6 +26,12 @@ export default function Menu({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button]}
+        onPress={() => navigation.navigate("VideoFavorito")}
+      >
+        <Text style={styles.nombreApellido}>Video Favorito</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button]}
         onPress={() => navigation.navigate("Acerca de")}
       >
         <Text style={styles.nombreApellido}>Acerca de</Text>

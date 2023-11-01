@@ -62,6 +62,20 @@ export default function Contactos() {
         apellido: "Min",
         telefono: "435-914-1934",
         esPredeterminado: true
+      },
+      {
+        id: 9,
+        nombre: "Samanta",
+        apellido: "Lee",
+        telefono: "284-172-7153",
+        esPredeterminado: true
+      },
+      {
+        id: 10,
+        nombre: "Poca",
+        apellido: "Jontas",
+        telefono: "624-192-7813",
+        esPredeterminado: true
       }
     ]
     setContactos(listaDeContactos);
