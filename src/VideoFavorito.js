@@ -1,51 +1,105 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
-import { Audio, Video } from 'expo-av';
+import { StyleSheet, View, Alert, Button , SafeAreaView, TextInput} from "react-native";
+import { ResizeMode, Video } from 'expo-av';
+import  AsyncStorage  from "@react-native-async-storage/async-storage";
+
 
 export default function VideoFavorito() {
+  const [videoActual, setVideoActual ]= useState("") 
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+  const [video1, setVideo1] = useState()
 
-  const playVideo = () => {
-    if (videoUrl) {
-      return (
-        <Video
-          source={{ uri: videoUrl }}
-          style={{ flex: 1, height: 300 }}
-          controls
-          resizeMode="contain"
-          paused={false}
-        />
-      );
-    } else {
-      return null;
+  useEffect( () => {
+    AsyncStorage.getItem('videoActual').then(response =>{
+      setVideo1(response)
+      console.log("response", response)
     }
-  };
+    )
+    console.log("llega a aqui")
+  }, [AsyncStorage.getItem('videoActual')]);
+  
+  async function AgregarNuevoVideo (){
+    console.log(videoActual)
+    try {
+        var video3 = await AsyncStorage.setItem('videoActual', videoActual);
+        setVideo1(video3)
+    }
+    catch (error){
+      console.error(error)
+    }
+  }
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#61dafb" />
-      <Video
-        ref={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+  
+        <>
+        <Video
+        ref={video}
+        style={styles.videoStyle}
+        source={{
+          uri: video1
+        }}
+        useNativeControls
+        resizeMode={ResizeMode.CONTAIN}
+        isLooping
+        onPlaybackStatusUpdate={status => setStatus(status)}
+        volume='1.0'
+      />
+      
+      <View style={styles.buttons}>
+        <Button
+          title={status.isPlaying ? 'Pause' : 'Play'}
+          onPress={() =>
+            status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+          }
         />
+      </View>
+      </>
+
+      <SafeAreaView style={styles.buttons}>
+      <TextInput
+          style={styles.input}
+          placeholder="Agregar Video"
+          onChangeText={(text) => setVideoActual(text)}
+          value={videoActual}
+        />
+        <Button
+          title= 'Subir video'
+          onPress={AgregarNuevoVideo}
+        />
+      </SafeAreaView>
     </View>
-  );
+  )
 }
 
+
+
 const styles = StyleSheet.create({
-  container: {
+   container: {
     flex: 1,
     backgroundColor: "#1e272e",
     alignItems: "center",
+    justifyContent: "center",
   },
-  nombreApellido: {
-    fontSize: 18,
-    color: "#ecf0f1",
-    fontWeight: "bold",
+  videoStyle: {
+    width: 650,
+    height: 300,
   },
-  centerText: {
-    flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: "#777",
+  buttons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  inputContainer: {
+    marginTop: 20,
+  },
+  input: {
+    height: 40,
+    marginVertical: 12,
+    marginHorizontal: 20,
+    borderWidth: 1,
+    padding: 10,
   },
 });
