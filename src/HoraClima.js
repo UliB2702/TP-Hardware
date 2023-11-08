@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -6,7 +5,6 @@ import {
   View,
   Alert,
   Animated,
-  RCTAnimation,
   TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
@@ -93,9 +91,19 @@ export default function HoraClima() {
       <Text style={styles.temperature}>
         {`${temperatura?.current?.temp_c} °C`}
       </Text>
-      <Text style={styles.time}>
-        {`${temperatura?.location?.localtime.split(" ")[1]}`}
+      { 
+        new Date().getMinutes() < 10 &&
+        <Text style={styles.time}>
+        {`${new Date().getHours().toString() + ":" + "0" + new Date().getMinutes().toString()}`}
       </Text>
+
+      }
+      { 
+        new Date().getMinutes() >= 10 &&
+      <Text style={styles.time}>
+        {`${new Date().getHours().toString() + ":" + new Date().getMinutes().toString()}`}
+      </Text>
+}
     </View>
   );
 }

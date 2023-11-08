@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
-import * as Location from "expo-location";
+import { StyleSheet, Text, View, Alert, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 export default function QRScanner() {

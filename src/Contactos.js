@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import Emergencia from './emergencia.png'
 
 export default function Contactos() {
   const [contactos, setContactos] = useState([]);
@@ -95,7 +96,7 @@ export default function Contactos() {
               style={styles.nombreApellido}
             >{`${item.nombre} ${item.apellido}`}</Text>
             <Text style={styles.telefono}>{item.telefono}</Text>
-            {item.esPredeterminado === true && <Image style={styles.imagen} source={{ uri: 'https://images.vexels.com/media/users/3/208199/isolated/lists/6eb5ef1c35080a1a35508c20b1ddee32-icono-de-llamada-de-telefono-de-emergencia.png' }}/>}
+            {item.esPredeterminado === true && <Image style={styles.imagen} source={Emergencia}/>}
             {/* Agrega el icono para el contacto predeterminado */}
           </View>
         )}

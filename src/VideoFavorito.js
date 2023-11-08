@@ -1,6 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Alert, Button , SafeAreaView, TextInput} from "react-native";
+import { StyleSheet, View, Button , SafeAreaView, TextInput} from "react-native";
 import { ResizeMode, Video } from 'expo-av';
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 
@@ -14,10 +13,8 @@ export default function VideoFavorito() {
   useEffect( () => {
     AsyncStorage.getItem('videoActual').then(response =>{
       setVideo1(response)
-      console.log("response", response)
     }
     )
-    console.log("llega a aqui")
   }, [AsyncStorage.getItem('videoActual')]);
   
   async function AgregarNuevoVideo (){
@@ -101,5 +98,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderWidth: 1,
     padding: 10,
+    color: "white",
+    borderColor: "white"
   },
 });
