@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert, Button } from "react-native";
+import { StyleSheet, Text, View, Alert, Button, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import QRGenerado from "./qrcode-generado.png"
 
 export default function QRScanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -20,7 +21,7 @@ export default function QRScanner() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    alert(data);
   };
 
   if (hasPermission === null) {
@@ -33,6 +34,7 @@ export default function QRScanner() {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#61dafb" />
+      <Image style={styles.imagen} source={QRGenerado}/>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
@@ -61,4 +63,8 @@ const styles = StyleSheet.create({
     padding: 32,
     color: "#777",
   },
+  imagen:{
+    width: "200px",
+    height: "200px"
+  }
 });

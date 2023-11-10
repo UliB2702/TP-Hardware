@@ -5,9 +5,9 @@ import {
   View,
   Alert,
   Animated,
-  TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
+import { Card } from 'react-native-elements';
 
 export default function HoraClima() {
   const [temperatura, setTemperatura] = useState([]);
@@ -77,33 +77,28 @@ export default function HoraClima() {
     })();
   }, []);
 
-  const handleMouseEnter = () => {
-    setShowText(!showText);
-  };
-
   return (
     <View style={styles.container}>
-      {showText && (
-        <TouchableOpacity onPress={handleMouseEnter}>
-          <Text style={styles.temperature}>pepingo</Text>
-        </TouchableOpacity>
-      )}
-      <Text style={styles.temperature}>
-        {`${temperatura?.current?.temp_c} °C`}
-      </Text>
-      { 
-        new Date().getMinutes() < 10 &&
-        <Text style={styles.time}>
-        {`${new Date().getHours().toString() + ":" + "0" + new Date().getMinutes().toString()}`}
-      </Text>
-
-      }
-      { 
-        new Date().getMinutes() >= 10 &&
-      <Text style={styles.time}>
-        {`${new Date().getHours().toString() + ":" + new Date().getMinutes().toString()}`}
-      </Text>
-}
+      <Card containerStyle={styles.cardContainer}>
+        <View style={styles.labelContainer}>
+          <Text style={styles.label}>Temperatura actual:</Text>
+          <Text style={styles.temperature}>
+            {`${temperatura?.current?.temp_c} °C`}
+          </Text>
+        </View>
+        <View style={styles.labelContainer}>
+          {new Date().getMinutes() < 10 && (
+            <Text style={[styles.time, styles.alignRight]}>
+              {`${new Date().getHours().toString() + ':' + '0' + new Date().getMinutes().toString()}`}
+            </Text>
+          )}
+          {new Date().getMinutes() >= 10 && (
+            <Text style={[styles.time, styles.alignRight]}>
+              {`${new Date().getHours().toString() + ':' + new Date().getMinutes().toString()}`}
+            </Text>
+          )}
+        </View>
+      </Card>
     </View>
   );
 }
@@ -111,18 +106,37 @@ export default function HoraClima() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1e272e",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#1e272e',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardContainer: {
+    backgroundColor: '#3498db',
+    borderRadius: 15,
+    padding: 20,
+    width: '80%',
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 18,
+    color: '#b2bec3',
+  },
+  time: {
+    fontSize: 24,
+    color: '#ecf0f1',
+    fontWeight: 'bold',
+  },
+  alignRight: {
+    alignSelf: 'flex-end',
   },
   temperature: {
     fontSize: 24,
-    color: "#ecf0f1",
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  time: {
-    fontSize: 18,
-    color: "#b2bec3",
+    color: '#ecf0f1',
+    fontWeight: 'bold',
   },
 });
