@@ -1,21 +1,28 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert, Button, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Alert, Button, Image, SafeAreaView, Platform } from "react-native";
 import QRGenerado from "./qrcode-generado.png"
 
 export default function QRCode({ navigation }) {
   
+  const DEFAULT_IMAGE = Image.resolveAssetSource(QRGenerado).uri;
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#61dafb" />
+      {Platform.OS === "web" &&
       <Image style={styles.imagen} source={QRGenerado}/>
+      }
+       {Platform.OS === "android" &&
+      <Image style={styles.imagen} source={{ uri: DEFAULT_IMAGE}}/>
+      }
       <SafeAreaView style={styles.buttons}>
         <Button
           title='Escanear QR'
           onPress={() => navigation.navigate("Escaner de QR")}
         />
       </SafeAreaView>
+      <StatusBar style="auto"/>
     </View>
   );
 }
@@ -39,8 +46,8 @@ const styles = StyleSheet.create({
   },
   imagen:{
     marginTop: 10,
-    width: "400px",
-    height: "400px"
+    width: "100%",
+    height: "50%",
   },
   buttons: {
     alignItems: 'center',

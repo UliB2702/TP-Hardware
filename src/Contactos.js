@@ -1,93 +1,65 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import * as Contacts from 'expo-contacts';
 
 export default function Contactos() {
   const [contactos, setContactos] = useState([]);
+  const [contactosTelefono, setContactosTelefonos] = useState([]);
+
   useEffect(() => {
-    //ejemplo sin api o bd
-    const listaDeContactos = [
-      {
-        id: 1,
-        nombre: "Martin",
-        apellido: "Pérez Disalvo",
-        telefono: "123-456-7890"
-      },
-      {
-        id: 2,
-        nombre: "María",
-        apellido: "Gómez",
-        telefono: "987-654-3210"
-      },
-      {
-        id: 3,
-        nombre: "Ulises",
-        apellido: "Baamonde",
-        telefono: "435-234-1934"
-      },
-      {
-        id: 4,
-        nombre: "Sesilu",
-        apellido: "Ednomaab",
-        telefono: "482-931-1483"
-      },
-      {
-        id: 5,
-        nombre: "Banbrok",
-        apellido: "Endpalev",
-        telefono: "740-227-1624"
-      },
-      {
-        id: 6,
-        nombre: "Nauj",
-        apellido: "Nosugref",
-        telefono: "732-234-1934"
-      },
-      {
-        id: 7,
-        nombre: "Enrrique",
-        apellido: "Mudrick",
-        telefono: "719-834-1931"
-      },
-      {
-        id: 8,
-        nombre: "Bok Ki",
-        apellido: "Min",
-        telefono: "435-914-1934"
-      },
-      {
-        id: 9,
-        nombre: "Samanta",
-        apellido: "Lee",
-        telefono: "284-172-7153"
-      },
-      {
-        id: 10,
-        nombre: "Poca",
-        apellido: "Jontas",
-        telefono: "624-192-7813"
+    (async () => {
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status === 'granted') {
+        const { data } = await Contacts.getContactsAsync({
+          fields: [Contacts.Fields.FirstName, Contacts.Fields.LastName, Contacts.Fields.ID, Contacts.Fields.PhoneNumbers]
+        });
+
+        if (data.length > 0) {
+          setContactosTelefonos(data)
+        }
       }
-    ]
-    setContactos(listaDeContactos);
+    })();
   }, []);
+
+  let getPhoneNumbers = (contact) => {
+    if(contact.phoneNumbers){
+      return contact.phoneNumbers.map((phoneNumber, index) => {
+        return(
+          <View key={index}>
+          <Text style={styles.telefono}>{phoneNumber.label}: {phoneNumber.number}</Text>
+          </View>
+        )
+      })
+    }
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar
         backgroundColor="#61dafb"
       />
+      {console.log(contactosTelefono.number)}
+      {contactosTelefono !== undefined &&
       <FlatList
-        data={contactos}
+        data={contactosTelefono}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.contactoContainer}>
             <Text
               style={styles.nombreApellido}
-            >{`${item.nombre} ${item.apellido}`}</Text>
-            <Text style={styles.telefono}>{item.telefono}</Text>
+            >{`${item?.firstName} `}</Text>
+            {item.lastName !== undefined &&
+            <Text
+            style={styles.nombreApellido}
+              >{`${item?.lastName}`}</Text>
+            }
+            {getPhoneNumbers(item)}
           </View>
         )}
       />
+      
+        }
     </View>
   );
 }

@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   viewVideo: {
-    width: "40%",
+    width: "20%",
   },
   videoStyle: {
-    width: 650,
-    height: 300,
+    width: 450,
+    height: 100,
   },
   buttons: {
     flexDirection: 'row',

@@ -87,6 +87,7 @@ export default function HoraClima() {
           </Text>
         </View>
         <View style={styles.labelContainer}>
+        <Text style={styles.label}>Hora actual:</Text>
           {new Date().getMinutes() < 10 && (
             <Text style={[styles.time, styles.alignRight]}>
               {`${new Date().getHours().toString() + ':' + '0' + new Date().getMinutes().toString()}`}
@@ -97,6 +98,18 @@ export default function HoraClima() {
               {`${new Date().getHours().toString() + ':' + new Date().getMinutes().toString()}`}
             </Text>
           )}
+        </View>
+        <View style={styles.labelContainer}>
+        <Text style={styles.label}>Fecha actual:</Text>
+          <Text style={[styles.time, styles.alignRight]}>
+          {`${new Date().getDate().toString() + '/' + new Date().getMonth().toString()+ '/' + new Date().getFullYear().toString()}`}
+          </Text>
+        </View>
+        <View style={styles.labelContainer}>
+        <Text style={styles.label}>Ubicación:</Text>
+        <Text style={[styles.time, styles.alignRight]}>
+        {`${temperatura?.location?.region}, ${temperatura?.location?.country}`}
+        </Text>
         </View>
       </Card>
     </View>
