@@ -39,7 +39,6 @@ export default function Contactos() {
       <StatusBar
         backgroundColor="#61dafb"
       />
-      {console.log(contactosTelefono.number)}
       {contactosTelefono !== undefined &&
       <FlatList
         data={contactosTelefono}

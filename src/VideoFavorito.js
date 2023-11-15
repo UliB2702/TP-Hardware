@@ -34,7 +34,7 @@ export default function VideoFavorito() {
         <View style={styles.viewVideo}>
         <Video
           ref={video}
-          videoStyle={{position: 'none'}}
+          videoStyle={{position: 'none', flex: 1}}
           source={{
             uri: video1
           }}
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   viewVideo: {
-    width: "20%",
+    width: "70%",
   },
   videoStyle: {
     width: 450,

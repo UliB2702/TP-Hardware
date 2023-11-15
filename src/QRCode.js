@@ -5,16 +5,16 @@ import QRGenerado from "./qrcode-generado.png"
 
 export default function QRCode({ navigation }) {
   
-  const DEFAULT_IMAGE = Image.resolveAssetSource(QRGenerado).uri;
+
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#61dafb" />
       {Platform.OS === "web" &&
-      <Image style={styles.imagen} source={QRGenerado}/>
+      <Image style={styles.imagenweb} source={QRGenerado}/>
       }
        {Platform.OS === "android" &&
-      <Image style={styles.imagen} source={{ uri: DEFAULT_IMAGE}}/>
+      <Image style={styles.imagencelu} source={QRGenerado}/>
       }
       <SafeAreaView style={styles.buttons}>
         <Button
@@ -44,13 +44,19 @@ const styles = StyleSheet.create({
     padding: 32,
     color: "#777",
   },
-  imagen:{
+  imagencelu:{
     marginTop: 10,
     width: "100%",
+    height: "50%",
+  },
+  imagenweb:{
+    marginTop: 10,
+    width: "30%",
     height: "50%",
   },
   buttons: {
     alignItems: 'center',
     marginVertical: 10,
   },
+
 });
